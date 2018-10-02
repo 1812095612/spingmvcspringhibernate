@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-24 9:27:48 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping package="com.qiaosoftware.surveyproject.entity.guest">
+    <class name="Survey" table="SURVEY_SURVEY">
+        <id name="surveyId" type="java.lang.Integer">
+            <column name="SURVEY_ID" />
+            <generator class="native" />
+        </id>
+        <property name="surveyName" type="java.lang.String">
+            <column name="SURVEY_NAME" />
+        </property>
+        <property name="logoPath" type="java.lang.String">
+            <column name="LOGO_PATH" />
+        </property>
+        <property name="completed" type="boolean">
+            <column name="COMPLETED" />
+        </property>
+        <property name="completedTime" type="java.util.Date">
+            <column name="COMPLETED_TIME" />
+        </property>
+        <!-- column属性：在SURVEY_SURVEY表中维护和User的关联关系的外键列的列名 -->
+        <many-to-one name="user" class="User" column="user_id"/>
+        
+        <!-- 使用set标签配置双向多对一关联关系中1的一端 -->
+        <!-- table属性：指定维护关联关系(包含外键)的数据库表的表名 -->
+        <set name="bagSet" table="SURVEY_BAG" fetch="join" order-by="BAG_ORDER">
+        	
+        	<!-- 使用key标签配置当前表在SURVEY_BAG表中的外键列的列名 -->
+        	<key column="SURVEY_ID"/>
+        	
+        	<!-- 使用one-to-many标签类配置1对多关联关系 -->
+        	<one-to-many class="Bag"/>
+        	
+        </set>
+        
+    </class>
+</hibernate-mapping>

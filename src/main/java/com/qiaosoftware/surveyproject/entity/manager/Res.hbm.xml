@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-1 16:27:09 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.qiaosoftware.surveyproject.entity.manager.Res" table="SURVEY_RES">
+        <id name="resId" type="java.lang.Integer">
+            <column name="RES_ID" />
+            <generator class="native" />
+        </id>
+        <property name="resName" type="java.lang.String">
+            <column name="RES_NAME" />
+        </property>
+        <property name="resCode" type="java.lang.Integer">
+            <column name="RES_CODE" />
+        </property>
+        <property name="resPos" type="java.lang.Integer">
+            <column name="RES_POS" />
+        </property>
+        <property name="publicRes" type="boolean">
+            <column name="PUBLIC_RES" />
+        </property>
+    </class>
+</hibernate-mapping>

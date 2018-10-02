@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+	version="2.1">
+
+	<description>Qiao 1.0 core library</description>
+	<display-name>Survey core</display-name>
+	<tlib-version>1.0</tlib-version>
+	<short-name>qiao</short-name>
+	<uri>http://www.qiao.com/survey</uri>
+	
+	<tag>
+		<description>决定当前页面元素是否有权限显示</description>
+		<name>authCheck</name>
+		<tag-class>com.qiaosoftware.surveyproject.tag.AuthCheckTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>servletPath</name>
+			<required>true</required>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description>决定当前问题详情是否要回显</description>
+		<name>determineRedisplay</name>
+		<tag-class>com.qiaosoftware.surveyproject.tag.DetermineRedisplayTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>bagId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>redisplayName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>questionType</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>optionIndex</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+</taglib>

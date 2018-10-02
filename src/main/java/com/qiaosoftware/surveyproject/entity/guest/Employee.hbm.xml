@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-21 11:38:31 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.qiaosoftware.surveyproject.entity.guest.Employee" table="EMPS">
+        <id name="empId" type="java.lang.Integer">
+            <column name="EMP_ID" />
+            <generator class="native" />
+        </id>
+        <property name="empName" type="java.lang.String">
+            <column name="EMP_NAME" />
+        </property>
+        <property name="age" type="int">
+            <column name="AGE" />
+        </property>
+    </class>
+</hibernate-mapping>

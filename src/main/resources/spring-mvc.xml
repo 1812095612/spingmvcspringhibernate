@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	
+	<!-- 配置自动扫描的包 -->
+	<context:component-scan base-package="com.qiaosoftware.surveyproject.component.*" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+	</context:component-scan>
+	
+	<!-- 配置内置的视图解析器 -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<!-- 配置国际化资源文件基名 -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="survey"/>
+	</bean>
+	
+	<!-- 配置default-servlet-handler -->
+	<mvc:default-servlet-handler/>
+	<mvc:annotation-driven/>
+	<mvc:view-controller path="/guest/user/toRegistUI" view-name="guest/user_registUI"/>
+	<mvc:view-controller path="/guest/user/toLoginUI" view-name="guest/user_loginUI"/>
+	<mvc:view-controller path="/manager/admin/toMainUI" view-name="manager/manager_main"/>
+	<mvc:view-controller path="/manager/admin/toLoginUI" view-name="manager/admin_loginUI"/>
+	<mvc:view-controller path="/manager/auth/toAddUI" view-name="manager/auth_addUI"/>
+	<mvc:view-controller path="/manager/role/toAddUI" view-name="manager/role_addUI"/>
+	<mvc:view-controller path="/manager/admin/toAddUI" view-name="manager/admin_addUI"/>
+	
+	<!-- 配置异常映射，统一管理项目中的错误消息 -->
+	<bean id="simpleMappingExceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<!-- key是异常全类名 -->
+				<!-- value是视图的名称——拼前后缀那玩意儿 -->
+				<prop key="com.qiaosoftware.surveyproject.exception.UserNameAlreadyExistsException">guest/user_registUI</prop>
+				<prop key="com.qiaosoftware.surveyproject.exception.UserNameAndPwdNotMatchException">guest/user_loginUI</prop>
+				<prop key="com.qiaosoftware.surveyproject.exception.FileTooLargeExceptionForSave">guest/survey_addUI</prop>
+				<prop key="com.qiaosoftware.surveyproject.exception.FileTooLargeExceptionForEdit">guest/survey_editUI</prop>
+				<prop key="com.qiaosoftware.surveyproject.exception.FileTypeNotAllowedExceptionForSave">guest/survey_addUI</prop>
+				<prop key="com.qiaosoftware.surveyproject.exception.FileTypeNotAllowedExceptionForEdit">guest/survey_editUI</prop>
+				<prop key="com.qiaosoftware.surveyproject.exception.UserNeededLoginException">guest/user_loginUI</prop>
+				<prop key="com.qiaosoftware.surveyproject.exception.BagOrderDuplicateException">guest/bag_orderAdjustUI</prop>
+				<prop key="com.qiaosoftware.surveyproject.exception.RemoveSurveyFailedException">error</prop>
+				<prop key="com.qiaosoftware.surveyproject.exception.RemoveBagFailedException">error</prop>
+				<prop key="com.qiaosoftware.surveyproject.exception.SurveyEmptyException">error</prop>
+				<prop key="com.qiaosoftware.surveyproject.exception.BagEmptyException">error</prop>
+				<prop key="com.qiaosoftware.surveyproject.exception.AdminLoginErrorExceptioin">manager/admin_loginUI</prop>
+				<prop key="com.qiaosoftware.surveyproject.exception.AdminNeededLoginException">manager/admin_loginUI</prop>
+				<prop key="com.qiaosoftware.surveyproject.exception.AdminAlreadyExistsException">manager/admin_addUI</prop>
+				<prop key="com.qiaosoftware.surveyproject.exception.NoRightException">error</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 配置自定义拦截器 -->
+	<mvc:interceptors>
+		<!-- <bean id="authInterceptor" class="com.qiaosoftware.surveyproject.interceptor.AuthInterceptor"/> -->
+		<bean id="loginInterceptor" class="com.qiaosoftware.surveyproject.interceptor.LoginInterceptor"/>
+		<bean id="generateResInterceptor" class="com.qiaosoftware.surveyproject.interceptor.GenerateResInterceptor"/>
+		<bean id="requestBindingInterceptor" class="com.qiaosoftware.surveyproject.interceptor.RequestBindingInterceptor"></bean>
+	</mvc:interceptors>
+	
+	<!-- 配置文件上传解析器 -->
+	<bean id="multipartResolver" 
+		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8"/>
+		<!-- 限制最大10M，   1M=1024*1024 -->
+		<property name="maxUploadSize" value="10485760"></property>
+	</bean>
+	
+	<!-- 配置Spring监听器 -->
+	<!-- 仅监控SpringMVC这一个IOC容器的事件 -->
+	<bean id="surveyLogTabelInitListerner" 
+		  class="com.qiaosoftware.surveyproject.listener.SurveyLogTabelInitListerner"/>
+
+</beans>

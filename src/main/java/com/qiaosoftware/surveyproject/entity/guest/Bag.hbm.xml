@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-25 10:09:01 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping package="com.qiaosoftware.surveyproject.entity.guest">
+    <class name="Bag" table="SURVEY_BAG">
+        <id name="bagId" type="java.lang.Integer">
+            <column name="BAG_ID" />
+            <generator class="native" />
+        </id>
+        <property name="bagName" type="java.lang.String">
+            <column name="BAG_NAME" />
+        </property>
+        <property name="bagOrder" type="java.lang.Integer">
+            <column name="BAG_ORDER" />
+        </property>
+        <!-- 映射多对一关联关系 -->
+        <many-to-one name="survey" class="Survey" column="SURVEY_ID"/>
+        
+        <!-- 映射一对多关联关系 -->
+		<set name="questionSet" 
+			 table="SURVEY_QUESTION" 
+			 fetch="join" 
+			 order-by="QUESTION_ID"
+			 inverse="true">
+			<key column="BAG_ID"/>
+			<one-to-many class="Question"/>
+		</set>
+    </class>
+</hibernate-mapping>

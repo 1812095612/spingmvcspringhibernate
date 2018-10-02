@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-2 9:44:14 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping package="com.qiaosoftware.surveyproject.entity.manager">
+    <class name="Auth" table="SURVEY_AUTH">
+        <id name="authId" type="java.lang.Integer">
+            <column name="AUTH_ID" />
+            <generator class="native" />
+        </id>
+        <property name="authName" type="java.lang.String">
+            <column name="AUTH_NAME" />
+        </property>
+        
+        <!-- 映射多对多关联关系 -->
+        <set name="resSet" table="INNER_AUTH_RES">
+        	
+        	<!-- 当前这一端在中间表中的外键列的列名 -->
+        	<key column="auth_id"/>
+        	
+        	<!-- 对方在中间表中的外键列的列名 -->
+        	<many-to-many class="Res" column="RES_ID"/>
+        	
+        </set>
+        
+    </class>
+</hibernate-mapping>
